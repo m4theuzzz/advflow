@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "prod": "node ace serve",
+    "start": "node ace serve",
     "dev": "node ace serve --watch",
-    "build": "node ace build --production",
-    "start": "node server.js"
+    "build": "node ace build --production"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.4.2",
