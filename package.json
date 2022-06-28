@@ -2,7 +2,6 @@
   "name": "advflow",
   "version": "1.0.0",
   "private": false,
-  "repository": "git://github.com/m4theuzzz/advflow",
   "scripts": {
     "prod": "node ace serve",
     "dev": "node ace serve --watch",
