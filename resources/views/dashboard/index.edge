@@ -1,0 +1,154 @@
+@layout('layouts/dashboard')
+
+@section('body')
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="tab-content tab-content-basic">
+            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="statistics-details d-flex align-items-center justify-content-between">
+                    <div>
+                      <p class="statistics-title">Novos Clientes</p>
+                      <h3 class="rate-percentage">{{ metrics.newClients.thisWeek }}</h3>
+                      @if(metrics.newClients.hadGrowth)
+                        <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i>
+                      @else
+                        <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i>
+                      @endif
+                      <span>{{ metrics.newClients.diff }}</span></p>
+                    </div>
+                    <div>
+                      <p class="statistics-title">Novas Requisições</p>
+                      <h3 class="rate-percentage">{{ metrics.newRequisitions.thisWeek }}</h3>
+                      @if(metrics.newRequisitions.hadGrowth)
+                        <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i>
+                      @else
+                        <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i>
+                      @endif
+                      <span>{{ metrics.newRequisitions.diff }}</span></p>
+                    </div>
+                    <div>
+                      <p class="statistics-title">Requisições Processadas</p>
+                      <h3 class="rate-percentage">{{ metrics.processedRequisitions.thisWeek }}</h3>
+                      @if(metrics.processedRequisitions.hadGrowth)
+                        <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i>
+                      @else
+                        <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i>
+                      @endif
+                      <span>{{ metrics.processedRequisitions.diff }}</span></p>
+                    </div>
+                    <div class="d-none d-md-block">
+                      <p class="statistics-title">Taxa de Conversão das Requisições</p>
+                      <h3 class="rate-percentage">{{ metrics.requisitionConversionRate }}</h3>
+                      <p class="text-success d-flex", style="opacity: 0"><i class="mdi mdi-menu-down"></i><span></span></p>
+                    </div>
+                    <div class="d-none d-md-block">
+                      <p class="statistics-title">Duração Média dos Processos</p>
+                      <h3 class="rate-percentage">{{ metrics.processDuration }}</h3>
+                      <p class="text-success d-flex", style="opacity: 0"><i class="mdi mdi-menu-down"></i><span></span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8 d-flex flex-column">
+                  <div class="row flex-grow">
+                    <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                      <div class="card card-rounded">
+                        <div class="card-body">
+                          <div class="d-sm-flex justify-content-between align-items-start">
+                            <div>
+                             <h4 class="card-title card-title-dash">Crescimento das Demandas</h4>
+                             <h5 class="card-subtitle card-subtitle-dash">Número de requisições cadastradas por dia da semana</h5>
+                            </div>
+                            <div id="performance-line-legend"></div>
+                            <script>
+                              (global => {
+                                global.sessionStorage.setItem("arraysByWeek", `{{{ metrics.requisitionsByWeekDay }}}`)
+                              })(this);
+                            </script>
+                          </div>
+                          <div class="chartjs-wrapper mt-5">
+                            <canvas id="performaneLine"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 d-flex flex-column">
+                  <div class="row flex-grow">
+                    <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                      <div class="card bg-primary card-rounded">
+                        <div class="card-body pb-0">
+                          <h4 class="card-title card-title-dash text-white mb-4">Estado dos Processos</h4>
+                          <div class="row">
+                            <div class="col-sm-4">
+                              <p class="status-summary-ight-white mb-1">Processos Encerrados</p>
+                              <h2 class="text-info">{{ metrics.allFinishedActions }}</h2>
+                            </div>
+                            <div class="col-sm-8">
+                              <div class="status-summary-chart-wrapper pb-4">
+                                <canvas id="status-summary"></canvas>
+                              </div>
+                              <script>
+                                (global => {
+                                  global.sessionStorage.setItem("allFinishedActions", `{{{ metrics.allFinishedActions }}}`)
+                                })(this)
+                              </script>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+                      <div class="card card-rounded">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <div class="d-flex justify-content-between align-items-center mb-2 mb-sm-0">
+                                <div class="circle-progress-width">
+                                  <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
+                                </div>
+                                <div>
+                                  <p class="text-small">Requisições Cadastradas</p>
+                                  <h4 class="mb-0 fw-bold">{{ metrics.allRequisitions }}</h4>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="d-flex justify-content-between align-items-center mb-2 mb-sm-0">
+                                <div class="circle-progress-width">
+                                  <div id="visitperday" class="progressbar-js-circle pr-2"></div>
+                                </div>
+                                <div>
+                                  <p class="text-small">Requisições Processadas</p>
+                                  <h4 class="mb-0 fw-bold">{{ metrics.allProcessedRequisitions }}</h4>
+                                </div>
+                                <script>
+                                  (global => {
+                                    global.sessionStorage.setItem("allRequisitions", `{{{ metrics.allRequisitions }}}`)
+                                    global.sessionStorage.setItem("allProcessedRequisitions", `{{{ metrics.allProcessedRequisitions }}}`)
+                                  })(this)
+                                </script>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end

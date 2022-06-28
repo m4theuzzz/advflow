@@ -1,0 +1,42 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link" href="/dashboard">
+        <i class="mdi mdi-grid-large menu-icon"></i>
+        <span class="menu-title">Painel principal</span>
+      </a>
+    </li>
+
+    <li class="nav-item nav-category">Processos</li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#processos" aria-expanded="false" aria-controls="processos">
+        <i class="menu-icon mdi mdi-floor-plan"></i>
+        <span class="menu-title">Processos</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="processos">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/dashboard/requisicoes">Requisições</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/dashboard/requisicoes/nova">Nova Requisição</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/dashboard/processos">Todos os Processos</a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="nav-item nav-category">Clientes</li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#clientes" aria-expanded="false" aria-controls="clientes">
+        <i class="menu-icon mdi mdi-floor-plan"></i>
+        <span class="menu-title">Clientes</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="clientes">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/dashboard/clientes">Clientes</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/dashboard/clientes/novo">Novo Cliente</a></li>
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+</nav>

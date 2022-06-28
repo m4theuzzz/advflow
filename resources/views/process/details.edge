@@ -1,0 +1,58 @@
+@layout('layouts/dashboard')
+
+@section('body')
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="tab-content tab-content-basic">
+            <div>
+              <h4>Processo {{act.id}}</h4>
+              <p>Status atual:
+                <b>
+                  @if(act.state === "pendente" || act.state === "aprovado")
+                  PENDENTE
+                  @end
+                  @if(act.state === "protocolado")
+                    PROTOCOLADO
+                  @end
+                  @if(act.state === "encerrado")
+                    ENCERRADO
+                  @end
+                  @if(act.state === "recusado")
+                    RECUSADO
+                  @end
+                </b>
+              </p>
+              <div class="pt-3">
+                  <div class="form-group">
+                      <label for="cliente">Texto da petição:</label>
+                      <div class="bg-white p-3">
+                        {{{ act.description }}}
+                      </div>
+                  </div>
+
+                  <input type="hidden" name="reqId" value="{{act.id}}">
+
+                  <div class="form-group">
+                    <a href="/dashboard/requisicoes/revisar/{{ act.requisition.id }}">Ver requisição</a>
+                    <br>
+                    <div class="my-2"></div>
+                    <a href="/dashboard/processos/requisicao/{{ act.requisition.id }}">Ver todos processos da requisição</a>
+                    <br>
+                    <div class="my-2"></div>
+                    <a href="/dashboard/processos/estado/{{ act.id }}">Alterar estado do processo</a>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@end
+
+

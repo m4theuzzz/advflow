@@ -1,0 +1,39 @@
+@layout('layouts/dashboard')
+
+@section('body')
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="tab-content tab-content-basic">
+            <h2>Lista de Clientes</h2>
+            <table class="table" data-toggle="table" data-visible-search="true" data-show-search-button="true" data-search="true">
+              <thead>
+              <tr>
+                <th data-sortable="true" data-searchable="true">Nome</th>
+                <th data-sortable="true" data-searchable="true">E-mail</th>
+                <th data-sortable="true" data-searchable="true">Telefone</th>
+                <th data-sortable="true" data-searchable="true">Cadastrado por</th>
+                <th data-sortable="true" data-searchable="true">Requisições cadastradas</th>
+              </tr>
+              </thead>
+              <tbody>
+                @each(client in clients)
+                  <tr>
+                    <td>{{ client.nome }}</td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.telefone }}</td>
+                    <td>{{ client.createdBy.nome }}</td>
+                    <td>{{ client.$extras.requisitions_count }}</td>
+                  </tr>
+                @end
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end

@@ -1,0 +1,59 @@
+@layout('layouts/dashboard')
+
+@section('body')
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="tab-content tab-content-basic">
+            <h2>
+              Lista de Processos
+              @if(isSpecific)
+                - Requisição {{ reqId }}
+              @end
+            </h2>
+            <table class="table" data-toggle="table" data-visible-search="true" data-show-search-button="true" data-search="true">
+              <thead>
+              <tr>
+                <th data-sortable="true" data-searchable="true">ID</th>
+                <th data-sortable="true" data-searchable="true">Tipo de ação</th>
+                <th data-sortable="true" data-searchable="true">Criada por</th>
+                <th data-sortable="true" data-searchable="true">Última Atualização</th>
+                <th data-sortable="true" data-searchable="true">Status</th>
+                <th data-sortable="false" data-searchable="false">Ações</th>
+              </tr>
+              </thead>
+              <tbody>
+                @each(req in reqs)
+                  <tr>
+                    <td>{{ req.id }}</td>
+                    <td>{{ req.requisition.reqType }}</td>
+                    <td>{{ req.createdBy.nome }}</td>
+                    <td>{{ req.updatedAt }}</td>
+                    <td>
+                      @if(req.state === "pendente")
+                        PENDENTE
+                      @end
+                      @if(req.state === "protocolado")
+                        PROTOCOLADO
+                      @end
+                      @if(req.state === "encerrado")
+                        ENCERRADO
+                      @end
+                    </td>
+                    <td class="d-flex" style="justify-content: space-around">
+                      <a href="/dashboard/processos/{{ req.id }}">Ver petição</a>
+                      <a href="/dashboard/processos/estado/{{ req.id }}">Definir estado</a>
+                    </td>
+                  </tr>
+                @end
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end

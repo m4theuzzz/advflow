@@ -1,0 +1,60 @@
+@layout('layouts/dashboard')
+
+@section('body')
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="tab-content tab-content-basic">
+            <div>
+              <h4>Processo {{act.id}}</h4>
+              <p>Status atual:
+                <b>
+                  @if(act.state === "pendente" || act.state === "aprovado")
+                    PENDENTE
+                  @end
+                  @if(act.state === "protocolado")
+                    PROTOCOLADO
+                  @end
+                  @if(act.state === "encerrado")
+                    ENCERRADO
+                  @end
+                </b>
+              </p>
+              <form class="pt-3" action="/dashboard/processos/estado/{{act.id}}" method="POST">
+
+                  <input type="hidden" name="actId" value="{{act.id}}">
+                  <input type="hidden" name="reqId" value="{{act.requisition.id}}">
+
+                  <div class="form-group">
+                      @if (flashMessages.has('errors.status'))
+                          <small style="color: red;">
+                          {{ flashMessages.get('errors.status') }}:
+                          </small>
+                      @endif
+                      <label for="status">Definir como</label>
+                      <select class="form-select w-100" name="status" required>
+                        <option value="" selected disabled>Selecione</option>
+                        <option value="pendente">PENDENTE</option>
+                        <option value="protocolado">PROTOCOLADO</option>
+                        <option value="encerrado">ENCERRADO</option>
+                        <option value="recusado">RECUSADO</option>
+                      </select>
+                  </div>
+
+                  <div class="mt-3">
+                      <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn text-white">SALVAR</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@end
+
+

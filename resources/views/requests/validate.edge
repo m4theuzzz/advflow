@@ -1,0 +1,77 @@
+@layout('layouts/dashboard')
+
+@section('body')
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="tab-content tab-content-basic">
+            <div>
+              <h4>Requisição de {{req.client.nome}}</h4>
+              <p>Status atual:
+                <b>
+                  @if(req.isValid === 1)
+                    VÁLIDA
+                  @end
+                  @if(req.isValid === 0)
+                    INVÁLIDA
+                  @end
+                  @if(req.isValid === null)
+                    PENDENTE
+                  @end
+                </b>
+              </p>
+              <form class="pt-3" action="/dashboard/requisicoes/revisar/{{req.id}}" method="POST">
+                  <div class="form-group">
+                      <label for="cliente">Resumo</label>
+                      <div>
+                        {{{ req.abstract }}}
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="cliente">Detalhes</label>
+                      <div>
+                        {{{ req.description }}}
+                      </div>
+                  </div>
+
+                  <input type="hidden" name="reqId" value="{{req.id}}">
+
+                  @if(!req.isValid)
+                  <div class="form-group">
+                      @if (flashMessages.has('errors.status'))
+                          <small style="color: red;">
+                          {{ flashMessages.get('errors.status') }}:
+                          </small>
+                      @endif
+                      <label for="status">Definir como</label>
+                      <select class="form-select w-100" name="status" required>
+                        <option value="" selected disabled>Selecione</option>
+                        <option value="1">Válido</option>
+                        <option value="0">Inválido</option>
+                      </select>
+                  </div>
+
+                  <div class="mt-3">
+                      <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn text-white">CADASTRAR</button>
+                  </div>
+                  @end
+                  @if(req.isValid)
+                  <div class="mt-3">
+                    <a href="/dashboard/processos/requisicao/{{ req.id }}">Ver todos processos da requisição</a>
+                  </div>
+                  @end
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@end
+
+

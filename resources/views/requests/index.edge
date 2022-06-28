@@ -1,0 +1,59 @@
+@layout('layouts/dashboard')
+
+@section('body')
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="tab-content tab-content-basic">
+            <h2>Lista de Requisições</h2>
+            <table class="table" data-toggle="table" data-visible-search="true" data-show-search-button="true" data-search="true">
+              <thead>
+              <tr>
+                <th data-sortable="true" data-searchable="true">ID</th>
+                <th data-sortable="true" data-searchable="true">Cliente</th>
+                <th data-sortable="true" data-searchable="true">Criada por</th>
+                <th data-sortable="true" data-searchable="true">Data da criação</th>
+                <th data-sortable="true" data-searchable="true">Status</th>
+                <th data-sortable="false" data-searchable="false">Ações</th>
+              </tr>
+              </thead>
+              <tbody>
+                @each(req in reqs)
+                  <tr>
+                    <td>{{ req.id }}</td>
+                    <td>{{ req.client.nome }}</td>
+                    <td>{{ req.createdBy.nome }}</td>
+                    <td>{{ req.createdAt }}</td>
+                    <td>
+                      @if(req.isValid === 1)
+                        VÁLIDA
+                      @end
+                      @if(req.isValid === 0)
+                        INVÁLIDA
+                      @end
+                      @if(req.isValid === null)
+                        PENDENTE
+                      @end
+                    </td>
+                    <td class="d-flex" style="justify-content: space-around">
+                      @if(req.isValid !== 1)
+                        <a href="/dashboard/requisicoes/editar/{{ req.id }}">Editar</a>
+                        <a href="/dashboard/requisicoes/revisar/{{ req.id }}">Revisar</a>
+                      @else
+                      <a href="/dashboard/processos/requisicao/{{ req.id }}">Ver processos</a>
+                      <a href="/dashboard/processos/novo/{{ req.id }}">Criar processo</a>
+                      @end
+                    </td>
+                  </tr>
+                @end
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end

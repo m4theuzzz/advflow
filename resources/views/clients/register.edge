@@ -1,0 +1,71 @@
+@layout('layouts/dashboard')
+
+@section('body')
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="tab-content tab-content-basic">
+            <div>
+              <h4>Cadastro de Cliente</h4>
+              <h6 class="fw-light">Todos os campos são obrigatórios</h6>
+              <form class="pt-3" action="{{ route('/dashboard/clientes/novo') }}" method="POST">
+                  <div class="form-group">
+                      @if (flashMessages.has('errors.nome'))
+                          <small style="color: red;">
+                          {{ flashMessages.get('errors.nome') }}:
+                          </small>
+                      @endif
+                      <input type="text" class="form-control form-control-lg" placeholder="Nome completo" name="nome" value="{{ flashMessages.get('nome') ?? '' }}">
+                  </div>
+
+                  <div class="form-group">
+                      @if (flashMessages.has('errors.email'))
+                      <small style="color: red;">
+                          {{ flashMessages.get('errors.email') }}:
+                      </small>
+                      @endif
+                      <input type="email" class="form-control form-control-lg" placeholder="Email" name="email" value="{{ flashMessages.get('email') ?? '' }}">
+                  </div>
+
+                  <div class="form-group">
+                      @if (flashMessages.has('errors.telefone'))
+                          <small style="color: red;">
+                          {{ flashMessages.get('errors.telefone') }}:
+                          </small>
+                      @endif
+                      <input type="text" class="form-control form-control-lg" placeholder="Telefone" name="telefone" value="{{ flashMessages.get('telefone') ?? '' }}">
+                  </div>
+
+                  <div class="form-group">
+                      @if (flashMessages.has('errors.address'))
+                      <small style="color: red;">
+                          {{ flashMessages.get('errors.address') }}:
+                      </small>
+                      @endif
+                      <input type="text" class="form-control form-control-lg" placeholder="Endereço completo" name="address" value="{{ flashMessages.get('address') ?? '' }}">
+                  </div>
+
+                  <div class="form-group">
+                      @if (flashMessages.has('errors.cpf'))
+                      <small style="color: red;">
+                          {{ flashMessages.get('errors.cpf') }}:
+                      </small>
+                      @endif
+                      <input type="text" class="form-control form-control-lg" placeholder="CPF" name="cpf" value="{{ flashMessages.get('cpf') ?? '' }}">
+                  </div>
+
+                  <div class="mt-3">
+                      <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn text-white">CADASTRAR</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@end
+

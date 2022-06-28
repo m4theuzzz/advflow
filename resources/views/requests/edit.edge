@@ -1,0 +1,65 @@
+@layout('layouts/dashboard')
+
+@section('body')
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="home-tab">
+          <div class="tab-content tab-content-basic">
+            <div>
+              <h4>Editar Requisição {{ req.id }}</h4>
+              <h6 class="fw-light">Todos os campos são obrigatórios</h6>
+              <form class="pt-3" action="{{ route('/dashboard/requisicoes/editar') }}" method="POST">
+                <input type="hidden" name="reqId" value="{{req.id}}">
+                  <div class="form-group">
+                      @if (flashMessages.has('errors.tipoReq'))
+                          <small style="color: red;">
+                          {{ flashMessages.get('errors.tipoReq') }}:
+                          </small>
+                      @endif
+                      <label for="tipoReq">Tipo de requisição</label>
+                      <select class="form-select w-100" name="tipoReq" required>
+                        <option value="" disabled>Selecione</option>
+                        <option value="Trabalhista" @if(req.reqType === 'Trabalhista') selected @end >Trabalhista</option>
+                        <option value="Cível" @if(req.reqType === 'Cível') selected @end>Cível</option>
+                        <option value="Família" @if(req.reqType === 'Família') selected @end>Família</option>
+                        <option value="Criminal" @if(req.reqType === 'Criminal') selected @end>Criminal</option>
+                      </select>
+                  </div>
+
+                  <div class="form-group">
+                      @if (flashMessages.has('errors.resumo'))
+                      <small style="color: red;">
+                          {{ flashMessages.get('errors.resumo') }}:
+                      </small>
+                      @endif
+                      <label for="resumo">Resumo</label>
+                      <textarea name="resumo" class="wysiwyg">{{{ req.abstract }}}</textarea>
+                  </div>
+
+                  <div class="form-group">
+                      @if (flashMessages.has('errors.detalhes'))
+                      <small style="color: red;">
+                          {{ flashMessages.get('errors.detalhes') }}:
+                      </small>
+                      @endif
+                      <label for="detalhes">Detalhes da demanda</label>
+                      <textarea name="detalhes" class="wysiwyg">{{{ req.description }}}</textarea>
+                  </div>
+
+                  <div class="mt-3">
+                      <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn text-white">SALVAR</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@end
+
+
