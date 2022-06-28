@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "start": "npm i && node ace serve",
+    "start": "node ace serve",
     "dev": "node ace serve --watch",
     "build": "node ace build --production"
   },
