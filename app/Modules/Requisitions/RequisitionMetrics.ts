@@ -83,6 +83,9 @@ export default class RequisitionsMetrics {
             arraysByWeek.lastWeek.push(lastWeekRequisitions[day].length);
         }
 
+        arraysByWeek.thisWeek = arraysByWeek.thisWeek.reverse();
+        arraysByWeek.lastWeek = arraysByWeek.lastWeek.reverse();
+
         return arraysByWeek;
     }
 }
